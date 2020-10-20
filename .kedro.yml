@@ -1,0 +1,6 @@
+context_path: pyladies_demo.run.ProjectContext
+project_name: "pyladies_demo"
+project_version: "0.16.5"
+package_name: "pyladies_demo"
+hooks:
+  - pyladies_demo.hooks.project_hooks

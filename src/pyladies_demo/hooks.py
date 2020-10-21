@@ -32,9 +32,10 @@ from typing import Any, Dict, Iterable, Optional
 from kedro.config import ConfigLoader
 from kedro.framework.hooks import hook_impl
 from kedro.io import DataCatalog
-from kedro.pipeline import Pipeline
+from kedro.pipeline import Pipeline, node
 from kedro.versioning import Journal
 
+from pyladies_demo.nodes.start import get_temp_data, choose_station
 
 class ProjectHooks:
     @hook_impl
@@ -45,7 +46,23 @@ class ProjectHooks:
             A mapping from a pipeline name to a ``Pipeline`` object.
 
         """
-        return {"__default__": Pipeline([])}
+        return {"__default__": Pipeline([
+            node(
+                get_temp_data,
+                inputs=None,
+                outputs='raw_temp',
+            ),
+            node(
+                choose_station,
+                inputs=['raw_temp', 'params:station_id'],
+                outputs='temperature',
+            ),
+            node(
+                lambda x: x.plot(x='time', figsize=(20, 12)).figure,
+                inputs='temperature',
+                outputs='temp_plot',
+            )
+        ])}
 
     @hook_impl
     def register_config_loader(self, conf_paths: Iterable[str]) -> ConfigLoader:

@@ -101,6 +101,7 @@ webencodings==0.5.1       # via bleach
 wheel==0.32.2             # via -r /mnt/c/Users/Laís Carvalho/Documents/projects/pyladies_demo/src/requirements.in
 whichcraft==0.6.1         # via cookiecutter
 widgetsnbextension==3.5.1  # via ipywidgets
+requests~=2.22.0
 
 # The following packages are considered to be unsafe in a requirements file:
 # pip
